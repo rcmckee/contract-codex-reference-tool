@@ -57,43 +57,12 @@ def process_text_to_dict_of_groups(all_text):
     return groups
     
     
-""" not needed here because the subgroups are processed with above function
-def process_sub_groups(groups):
-    try:
-        maingroups = {groups[0][0]:{'maingroup_notes':groups[0][1], 'sub_groups':{}, 'maingroup_subgroups_url':[headings,url]}}    
-    except:
-        maingroups = {groups[0][0]:{'maingroup_notes':'none', 'sub_groups':{}, 'maingroup_subgroups_url':[headings,url]}}  
-    for g in groups[1:]:
-        sub_group = {'sub_group_note':g[1]}
-
-        sub_group_clauses = []
-
-        for i,c in enumerate(g[2:], 2):
-            if c[:8] == 'Exemplar':
-                sub_group_clauses.append(g[i+1])
-        sub_group['sub_group_clauses'] = sub_group_clauses
-        print(g[0])
-        maingroups[groups[0][0]]['sub_groups'][g[0]] = sub_group
-    return maingroups
-"""
 
 def hash_text(text):
     hash_object = hashlib.md5(text.encode())
     return hash_object.hexdigest()
 
 
-
-"""
-data = {}
-data_lookup = {}
-
-for i,(k,v) in enumerate(db['clauses_to_search'].items()):
-    
-    data_lookup[hash_text(k)] = str(i)
-"""
-        
-        
-        
 
 def is_clause_sub_clause(clauses_to_search):
     for i,(k,v) in enumerate(clauses_to_search):
@@ -105,43 +74,7 @@ def is_clause_sub_clause(clauses_to_search):
     
         new_db[hash_text(k)] = v
     
-"""
-v
-{'maingroup': 'Warranties: Software',
- 'subgroup': 'Compliance with Law',
- 'larger_clause': '3d3bde07d36e9fe19dbc3b38c5afc543',
- 'clause': 'Licensor warrants and represents that it has and will continue to comply with all applicable governmental laws, statutes, rules and regulations including, but not limited to, those related to export of product and technical data, and Licensor shall provide prior written notice of any facts which would make the foregoing representations untrue'}
- """
- 
- 
-# checking that all main groups in first db were converted. 
 
-
-
-#for k,v in db.items():
-#    if k != 'clauses_to_search':
-#        data_db[k] = v
-        
-        
-        
-"""example of what k is and v is
-k is 'Audit Rights'
-v is {'main_group_notes':'','sub_groups':{}}
-#example from first db
-db[main_group] = {'maingroup_notes':'',
-'sub_groups':{'sub_group_1_name':{'sub_group_note':'','sub_group_clauses':['a','b']}}}
-
-
-db['Audit Rights'] -->
-{'maingroup_notes': 'none',
- 'sub_groups': {'Purpose': {'sub_group_note': 'In circumstances where one of the
- 
-"""
-
-
-
-
-##### get each sentence from paragraphs and make those seachable
 
 def make_sentences_from_paragraph(text): 
     data = []
@@ -150,6 +83,41 @@ def make_sentences_from_paragraph(text):
         data.append(s)
     return data
     
+
+def build_custom_db_from_text(all_text):
+
+
+    all_groups = process_text_to_dict_of_groups(all_text)
+
+    hash_db_personal = pysos.Dict('pysos_hash_values_personal')
+        
+    data_db_personal = pysos.Dict('pysos_meta_data_db_personal')
+
+    clauses_to_search = {}
+    for k,v in all_groups.items():
+        for a,b in v['sub_groups'].items():
+                
+            for c in b['sub_group_clauses']:
+                clauses_to_search[c] = {'maingroup':k,'subgroup':a}
+                for s in make_sentences_from_paragraph(c):
+                    if len(s)>0:
+                        clauses_to_search[s] = {'maingroup':k,'subgroup':a, 'larger_clause':c}
+        
+            
+    data_db_personal = clauses_to_search
+        
+    for i,(k,v) in enumerate(clauses_to_search.items()):
+            
+        if 'larger_clause' in v:
+            v['larger_clause'] = hash_text(v['larger_clause'])
+        v |= {'clause':k}
+            
+            
+        hash_db_personal[hash_text(k)] = v
+
+    hash_db |= hash_db_personal
+    data_db |= data_db_personal
+
 
 
 def getText(filename):
@@ -165,9 +133,7 @@ def getText(filename):
     return fullText
 
 
-def hash_text(text):
-    hash_object = hashlib.md5(text.encode())
-    return hash_object.hexdigest()
+
 
 
 def show_redlines(a, b):
