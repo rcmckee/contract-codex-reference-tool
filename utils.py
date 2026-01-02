@@ -1,4 +1,4 @@
-
+import docx
 import pysos
 import hashlib
 import re 
@@ -21,45 +21,8 @@ def get_parts_of_maingroup(part):
             return ('fallback','')
 
 
-# db[main_group] = {'maingroup_notes':'','sub_groups':{'sub_group_1_name':{'sub_group_note':'','sub_group_clauses':['a','b']}}}
-
-def process_custom_text_to_dict_of_groups(all_text):
-    """
-    use this function to convert text of a custom clause codex. The result is a dictionary that can be added to the contract codex database for similarity search.
-    The output dictionary will follow this pattern: {'main_group': {'maingroup_notes':'','sub_groups':{'sub_group_1_name':{'sub_group_note':'','sub_group_clauses':['a','b']}}}}
-
-    The input text should be formated as follows:
-        all_text = '''
-                    Main group: first k
-                    
-                    Main group notes: this is v and everything below
-                    
-                    Sub group: a
-                    Sub group notes: a1xxxxxx
-                    Sub group clause: a1axxxxxx
-                    Sub group clause: a1bxxxxxx
-                    
-                    Sub group: b
-                    Sub group notes: b1xxxxxx
-                    Sub group clause: b1axxxxxx
-                    Sub group clause: b1bxxxxxx
-                    
-                    Main group: second k
-                    
-                    Main group notes: this is v and everything below
-                    
-                    Sub group: 2a
-                    Sub group notes: 2a1xxxxxx
-                    Sub group clause: 2a1axxxxxx
-                    Sub group clause: 2a1bxxxxxx
-                    
-                    Sub group: 2b
-                    Sub group notes: 2b1xxxxxx
-                    Sub group clause: 2b1axxxxxx
-                    Sub group clause: 2b1bxxxxxx
-                    '''
-
-    """
+def process_text_to_dict_of_groups(all_text):
+    
     parts = all_text.split('Main group:')
 
     groups = {}
@@ -121,7 +84,42 @@ def make_sentences_from_paragraph(text):
     
 
 def build_custom_db_from_text(all_text):
+    """
+    use this function to convert text of a custom clause codex. The result is a dictionary that can be added to the contract codex database for similarity search.
+    The output dictionary will follow this pattern: {'main_group': {'maingroup_notes':'','sub_groups':{'sub_group_1_name':{'sub_group_note':'','sub_group_clauses':['a','b']}}}}
 
+    The input text should be formated as follows:
+        all_text = '''
+                    Main group: first k
+                    
+                    Main group notes: this is v and everything below
+                    
+                    Sub group: a
+                    Sub group notes: a1xxxxxx
+                    Sub group clause: a1axxxxxx
+                    Sub group clause: a1bxxxxxx
+                    
+                    Sub group: b
+                    Sub group notes: b1xxxxxx
+                    Sub group clause: b1axxxxxx
+                    Sub group clause: b1bxxxxxx
+                    
+                    Main group: second k
+                    
+                    Main group notes: this is v and everything below
+                    
+                    Sub group: 2a
+                    Sub group notes: 2a1xxxxxx
+                    Sub group clause: 2a1axxxxxx
+                    Sub group clause: 2a1bxxxxxx
+                    
+                    Sub group: 2b
+                    Sub group notes: 2b1xxxxxx
+                    Sub group clause: 2b1axxxxxx
+                    Sub group clause: 2b1bxxxxxx
+                    '''
+
+    """
 
     all_groups = process_text_to_dict_of_groups(all_text)
 
