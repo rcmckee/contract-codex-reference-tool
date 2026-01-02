@@ -305,7 +305,7 @@ editor = """
 button = """"""
 
 
-def process_contract(input_file):
+def process_contract(input_file,cutoff_value,secondary_cutoff_value,db_hash_values,db_meta_data,clause_phrases,model,sentence_embeddings):
     doc_text = getText(input_file)
 
 
