@@ -2,6 +2,9 @@ import docx
 import pysos
 import hashlib
 import re 
+from sentence_transformers import SentenceTransformer
+from sentence_transformers.util import semantic_search
+from difflib import SequenceMatcher
 
 # process input to make database
 
