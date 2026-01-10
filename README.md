@@ -15,3 +15,6 @@
 <img src="https://github.com/user-attachments/assets/b4c879de-01d2-42f0-990c-c21500934ae5" width="50%" height="50%"/>
 
 “If you want to use it, here it is. If you can make it better, please do.” - Linus Torvalds
+
+# How To Contribute To The Project
+[Follow the github instructions for contributing to a project](https://docs.github.com/en/get-started/exploring-projects-on-github/contributing-to-a-project)
