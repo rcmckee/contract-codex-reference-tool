@@ -19,6 +19,8 @@
 # How To Contribute To The Project
 [Follow the github instructions for contributing to a project](https://docs.github.com/en/get-started/exploring-projects-on-github/contributing-to-a-project)
 
+-----Longer Description-----
+
 # 📚 Contract Codex Reference Tool
 
 <div align="center">
