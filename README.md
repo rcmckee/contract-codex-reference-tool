@@ -60,7 +60,7 @@ The `Contract Codex Reference Tool` is an analytical project designed to facilit
 -   ![Jupyter Notebook](https://img.shields.io/badge/Jupyter-F37626?style=for-the-badge&logo=jupyter&logoColor=white)
 
 **Data Storage:**
--   Local data files (`pysos_meta_data_db`, `pysos_hash_values`) implementing [pysos](https://github.com/dagnelies/pysos).
+-   Local data files (`pysos_meta_data_db`, `pysos_hash_values`) implementing [pysos](https://github.com/dagnelies/pysos) that uses persistant dictionaries and lists for simple object storage.
 
 **Inferred Libraries (Common for Data Science in Python):**
 -   ![Pandas](https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white) (for data manipulation)
