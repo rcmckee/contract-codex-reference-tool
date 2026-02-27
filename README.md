@@ -3,6 +3,8 @@
     <img src="https://colab.research.google.com/assets/colab-badge.svg" width="25%" height="25%"/>
   </a>
 
+# Open Web App (easiest)
+[web app hosted on render.com](https://contract-reference-tool.onrender.com/)
 
 # How To Use
 
